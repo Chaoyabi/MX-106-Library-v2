@@ -1,5 +1,6 @@
 unsigned short update_crc(unsigned short crc_accum, unsigned char *data_blk_ptr, unsigned short data_blk_size)
 {
+    crc_accum = 0;
     unsigned short i, j;
     unsigned short crc_table[256] = {
         0x0000, 0x8005, 0x800F, 0x000A, 0x801B, 0x001E, 0x0014, 0x8011,
