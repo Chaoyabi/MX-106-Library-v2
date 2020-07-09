@@ -3,7 +3,6 @@ This library use protocal 2.0 on MX-106 for Mbed.
 Hope it would be helpful and better than protocal 1.0.
 Create by Frank Yin
 */
-
 #ifndef Mx106v2_h
 #define Mx106v2_h
 
@@ -130,7 +129,7 @@ Create by Frank Yin
 #define SET_ID_LENGTH                   0x04
 #define SET_MAX_VELOCITY_LENGTH         0x07
 
-#define READ_POS_LENGTH                 0x04
+#define READ_POS_LENGTH                 0x07
 #define READ_SPEED_LENGTH               0x04
 
 #define WHEEL_LENGTH                    0x07
@@ -162,10 +161,12 @@ Create by Frank Yin
 
 #define BROADCAST_ID                    0xFE
 
-#define HEADER                          0xFF
+#define HEADER1                         0xFF
+#define HEADER2                         0xFF
+#define HEADER3                         0xFD
 
 #define STATUS_PACKET_TIMEOUT           5      // in millis()
-#define STATUS_FRAME_BUFFER             5
+#define STATUS_FRAME_BUFFER             4
 
 //------------------------------------------------------------------------------
 // Define Dynamixel Class
@@ -176,10 +177,18 @@ class DynamixelClass_v2
     private:
         Serial *servoSerial;
         DigitalOut *servoSerialDir;
+        void debugInstructionframe(void);
+        void debugStatusframe(void);
+        void transmitInstructionPacket(void);
+        void readStatusPacket(void);
     
     public:
         DynamixelClass_v2(int baud,PinName D_Pin,PinName tx, PinName rx);  //Constructor
         ~DynamixelClass_v2(void);                                          //Destruktor
+        
+        unsigned int ReadPosition(unsigned char ID);
+
+        int test();
 
 };
 #endif
